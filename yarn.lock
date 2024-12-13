@@ -5158,6 +5158,8 @@ __metadata:
     tailwind-variants: "npm:0.3.0"
     tailwindcss: "npm:3.4.0"
     typescript: "npm:5.3.3"
+  peerDependencies:
+    react: ^18.0.0
   languageName: unknown
   linkType: soft
 

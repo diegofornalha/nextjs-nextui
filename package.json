@@ -56,5 +56,8 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "peerDependencies": {
+    "react": "^18.0.0"
+  }
 }
