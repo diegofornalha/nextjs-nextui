@@ -93,21 +93,25 @@ Mantenha o .gitignore limpo e relevante para seu projeto:
 #### ✅ Regras para um .gitignore Eficiente:
 
 1. **Mantenha Apenas o Necessário**
+
    - Inclua somente padrões para arquivos que existem ou podem existir no projeto
    - Remova entradas de tecnologias que não está usando
    - Evite duplicação de padrões
 
 2. **Organize por Categorias**
+
    - Agrupe entradas relacionadas (ex: dependências, build, ambiente)
    - Use comentários para identificar cada seção
    - Mantenha uma ordem lógica
 
 3. **Revise Regularmente**
+
    - Remova padrões de ferramentas que não usa mais
    - Atualize conforme o projeto evolui
    - Questione se cada entrada é realmente necessária
 
 4. **Padrões Essenciais para Next.js**
+
    ```plaintext
    # Dependências
    node_modules
@@ -256,6 +260,11 @@ src/
 - Arquivos vazios.
 - Imports não utilizados.
 - Código comentado em excesso.
+- IDEs mostrando erros de dependências mesmo após instalação:
+  - Este é um problema comum onde a IDE não reconhece imediatamente novas dependências
+  - Solução: Feche e reabra o navegador/IDE
+  - Na maioria dos casos, os erros desaparecem após reiniciar a IDE
+  - Não é necessário reinstalar as dependências nestes casos
 
 ## Conclusão
 
@@ -273,7 +282,7 @@ projeto/
 ├── node_modules/          # ⚠️ no .gitignore
 ├── src/
 │   ├── @types/
-│   ���   └── next-pwa.d.ts
+│   └── next-pwa.d.ts
 │   ├── app/
 │   │   ├── globals.css
 │   │   ├── layout.tsx
@@ -313,6 +322,7 @@ projeto/
   - `.gitignore`: Arquivos a serem ignorados pelo Git
 
 # Ambiente de Desenvolvimento
+
 - Sistema Operacional: macOS
 - Gerenciador de Pacotes do Sistema: Homebrew (brew)
 - Gerenciador de Pacotes Node: Yarn (exclusivamente)
@@ -320,20 +330,24 @@ projeto/
 ## Gerenciamento de Dependências
 
 ### ✅ Usar Apenas Yarn
+
 ```bash
 yarn add [pacote]         # Instalar nova dependência
 yarn add -D [pacote]      # Instalar dependência de desenvolvimento
 yarn remove [pacote]      # Remover dependência
 yarn                      # Instalar todas as dependências
 yarn upgrade             # Atualizar dependências
+yarn cache clean        # Limpa o cache do Yarn quando houver problemas de dependências
 ```
 
 ### ❌ Não Usar
+
 - Evitar comandos npm (npm install, npm run, etc)
 - Não manter package-lock.json
 - Não misturar npm e yarn no mesmo projeto
 
 ## Scripts do Projeto
+
 ```bash
 yarn dev                  # Ambiente de desenvolvimento
 yarn build               # Build de produção
@@ -342,10 +356,12 @@ yarn lint                # Executar linter
 ```
 
 ## Arquivos de Lock
+
 - Manter apenas: yarn.lock
 - Remover: package-lock.json
 
 ## Configuração do .gitignore para Yarn
+
 ```plaintext
 # Yarn
 .yarn/*
@@ -358,6 +374,7 @@ yarn lint                # Executar linter
 ```
 
 ## Instalação no macOS
+
 - Instalado via Homebrew: `brew install yarn`
 - Atualização: `brew upgrade yarn`
 - Verificar versão: `yarn --version`
@@ -365,12 +382,14 @@ yarn lint                # Executar linter
 ## Boas Práticas para macOS
 
 1. **Sempre prefira Homebrew para instalações globais**
+
    - Mais confiável
    - Melhor gerenciamento de dependências
    - Atualizações mais simples
    - Menos problemas de permissão
 
 2. **Comandos Homebrew Úteis**
+
    ```bash
    brew install [pacote]    # Instalar pacote
    brew upgrade [pacote]    # Atualizar pacote
@@ -383,3 +402,217 @@ yarn lint                # Executar linter
    - Mantenha o Homebrew atualizado
    - Limpe pacotes antigos periodicamente: `brew cleanup`
    - Verifique dependências: `brew deps --tree [pacote]`
+
+## Configuração do ESLint
+
+### Configuração Recomendada
+
+1. **Instalação das Dependências**
+
+```bash
+yarn add -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-jsx-a11y
+```
+
+2. **Arquivo de Configuração Base**
+
+```javascript:eslint.config.mjs
+export default {
+  root: true,
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
+  },
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:jsx-a11y/recommended',
+    'next/core-web-vitals',
+  ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
+  plugins: ['@typescript-eslint', 'react', 'jsx-a11y'],
+  rules: {
+    // Regras personalizadas
+    'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-explicit-any': 'warn',
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+  ignorePatterns: [
+    'node_modules/',
+    '.next/',
+    'out/',
+    'public/',
+    '*.config.js',
+    '*.config.mjs',
+  ],
+}
+```
+
+3. **Scripts no package.json**
+
+```json
+{
+  "scripts": {
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix"
+  }
+}
+```
+
+### Boas Práticas de Linting
+
+✅ **Recomendado**:
+
+- Execute o linter antes de cada commit
+- Configure o auto-fix no seu editor
+- Use o ESLint junto com o Prettier
+- Mantenha as regras consistentes em todo o projeto
+- Documente exceções às regras quando necessário
+
+❌ **Evite**:
+
+- Desabilitar regras do ESLint sem motivo claro
+- Ignorar warnings do linter
+- Misturar diferentes padrões de código
+- Deixar regras conflitantes ativas
+
+### Integração com VSCode
+
+1. **Instale a extensão ESLint**
+2. **Configure o settings.json**:
+
+```json
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ]
+}
+```
+
+### Resolução de Problemas Comuns
+
+1. **Conflitos com Prettier**:
+
+   - Instale `eslint-config-prettier`
+   - Adicione `prettier` ao final do array `extends`
+
+2. **Regras Muito Restritivas**:
+
+   - Ajuste as regras gradualmente
+   - Comece com warnings antes de errors
+   - Documente as razões das alterações
+
+3. **Performance**:
+   - Use `.eslintignore` para diretórios grandes
+   - Configure o cache do ESLint
+   - Limite o escopo da análise quando necessário
+
+## Análise de Bundle com yarn analyze
+
+### Configuração do Analisador de Bundle
+
+1. **Instalação da Dependência**
+
+```bash
+yarn add -D @next/bundle-analyzer
+```
+
+2. **Configuração no next.config.js**
+
+```javascript:next.config.js
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
+module.exports = withBundleAnalyzer({
+  // ... outras configurações do Next.js
+})
+```
+
+3. **Adicione o Script no package.json**
+
+```json
+{
+  "scripts": {
+    "analyze": "ANALYZE=true yarn build",
+    "analyze:win": "set ANALYZE=true && yarn build" // Para Windows
+  }
+}
+```
+
+### Como Usar
+
+1. **Execute o Comando**
+
+```bash
+yarn analyze
+```
+
+2. **Interpretando os Resultados**:
+   - Dois relatórios serão gerados automaticamente no navegador:
+     - Client bundles (`.next/analyze/client.html`)
+     - Server bundles (`.next/analyze/server.html`)
+   - Analise o tamanho dos módulos
+   - Identifique dependências pesadas
+   - Verifique código não utilizado
+
+### Boas Práticas de Análise
+
+✅ **Recomendado**:
+
+- Execute a análise antes de cada deploy
+- Monitore o crescimento do bundle
+- Otimize dependências grandes
+- Utilize code splitting quando necessário
+- Remova imports não utilizados
+
+❌ **Evite**:
+
+- Ignorar bundles muito grandes
+- Manter dependências duplicadas
+- Importar bibliotecas inteiras quando necessário apenas alguns componentes
+- Deixar código morto no bundle
+
+### Otimizações Comuns
+
+1. **Redução de Tamanho**:
+
+   - Use dynamic imports para código não crítico
+   - Implemente lazy loading para componentes grandes
+   - Remova dependências não utilizadas
+   - Utilize versões mais leves de bibliotecas quando possível
+
+2. **Monitoramento**:
+
+   - Compare resultados entre builds
+   - Estabeleça limites máximos de tamanho
+   - Documente decisões de otimização
+   - Mantenha um histórico de análises
+
+3. **Performance**:
+   - Priorize otimizações em páginas críticas
+   - Balance tamanho vs funcionalidade
+   - Considere estratégias de caching
+   - Implemente code splitting estratégico
