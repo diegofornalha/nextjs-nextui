@@ -1,0 +1,35 @@
+name: Verificação de Dependências
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "0 0 * * 1" # Toda segunda-feira
+
+jobs:
+  check-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18.19.0"
+
+      - name: Setup Yarn
+        run: corepack enable
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Check for outdated dependencies
+        run: yarn outdated || true
+
+      - name: Security audit
+        run: yarn audit || true
+
+      - name: Build test
+        run: yarn build
