@@ -88,33 +88,59 @@ module.exports = nextConfig;
 
 ### Configurar .gitignore
 
-Adicione estas entradas essenciais ao `.gitignore`:
+Mantenha o .gitignore limpo e relevante para seu projeto:
 
-```plaintext
-# Dependencies
-node_modules
+#### ✅ Regras para um .gitignore Eficiente:
 
-# Next.js
-.next
-out
+1. **Mantenha Apenas o Necessário**
+   - Inclua somente padrões para arquivos que existem ou podem existir no projeto
+   - Remova entradas de tecnologias que não está usando
+   - Evite duplicação de padrões
 
-# Build
-build
-dist
+2. **Organize por Categorias**
+   - Agrupe entradas relacionadas (ex: dependências, build, ambiente)
+   - Use comentários para identificar cada seção
+   - Mantenha uma ordem lógica
 
-# Debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+3. **Revise Regularmente**
+   - Remova padrões de ferramentas que não usa mais
+   - Atualize conforme o projeto evolui
+   - Questione se cada entrada é realmente necessária
 
-# Local env files
-.env*.local
-.env
+4. **Padrões Essenciais para Next.js**
+   ```plaintext
+   # Dependências
+   node_modules
 
-# IDE
-.idea
-.vscode
-```
+   # Next.js
+   .next/
+
+   # Ambiente
+   .env*.local
+   .env
+
+   # Debug
+   npm-debug.log*
+   yarn-debug.log*
+   yarn-error.log*
+
+   # TypeScript
+   *.tsbuildinfo
+   next-env.d.ts
+
+   # Sistema
+   .DS_Store
+
+   # Logs
+   *.log
+   ```
+
+#### ❌ Evite no .gitignore:
+
+- Padrões de ferramentas que não usa
+- Duplicação de regras
+- Entradas muito genéricas
+- Padrões de outras tecnologias/frameworks
 
 ### Criar um Projeto Next.js Básico
 
