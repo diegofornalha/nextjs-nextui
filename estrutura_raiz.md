@@ -33,18 +33,15 @@
 
 ```plaintext
 .
-├── .cursorrules          # Regras do cursor
-├── .cursorignore        # Arquivos ignorados pelo cursor
-├── .gitignore           # Arquivos ignorados pelo Git
-├── eslint.config.mjs    # Configuração do ESLint
-├── next.config.js       # Configuração principal do Next.js
-├── next.config.ts       # Tipos da configuração do Next.js
-├── next-env.d.ts        # Declarações de tipos do Next.js
+├── .github/workflows/     # Configurações do GitHub Actions
+│   └── check-deps.yml    # Verificação de dependências
+├── .npmrc                # Configuração do NPM
+├── .nvmrc               # Versão do Node.js (NVM)
+├── .yarnrc.yml          # Configuração do Yarn
+├── CHANGELOG.md         # Registro de alterações
 ├── package.json         # Manifesto do projeto
-├── package-lock.json    # Versões exatas das dependências
-├── postcss.config.mjs   # Configuração do PostCSS
+├── public/manifest.json # Configuração PWA
 ├── README.md           # Documentação principal
-├── tailwind.config.ts  # Configuração do Tailwind CSS
 └── tsconfig.json       # Configuração do TypeScript
 ```
 
@@ -52,10 +49,15 @@
 
 ### Configuração do Projeto
 
+- `.github/workflows/check-deps.yml`: Workflow para verificação de dependências
+- `.npmrc`: Configurações específicas do NPM
+- `.nvmrc`: Especifica a versão do Node.js para o projeto
+- `.yarnrc.yml`: Configurações específicas do Yarn
+- `CHANGELOG.md`: Histórico de mudanças do projeto
 - `package.json`: Manifesto do projeto e suas dependências
-- `package-lock.json`: Versões exatas das dependências
-- `tsconfig.json`: Configuração do TypeScript
+- `public/manifest.json`: Configuração do PWA (Progressive Web App)
 - `README.md`: Documentação do projeto
+- `tsconfig.json`: Configuração do TypeScript
 
 ### Next.js
 
@@ -86,6 +88,14 @@
 - `.env`: Variáveis de ambiente
 - `*.log`: Arquivos de log
 - `.DS_Store`: Arquivos do sistema macOS
+
+### GitHub e Controle de Versão
+
+- `.github/workflows/`: Configurações de CI/CD do GitHub Actions
+- `.npmrc`: Configurações específicas do NPM
+- `.nvmrc`: Especifica a versão do Node.js para o projeto
+- `.yarnrc.yml`: Configurações específicas do Yarn
+- `CHANGELOG.md`: Histórico de mudanças do projeto
 
 ## Observações
 
