@@ -22,3 +22,9 @@ next-env.d.ts
 
 # Logs
 *.log
+
+# IDE e Editores
+.vscode
+.idea
+*.swp
+*.swo
