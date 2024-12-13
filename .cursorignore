@@ -1,1 +1,25 @@
 # por padrao o cursor ignora os arquivos já mensinados no .gitignore
+
+# Configuração de ES Modules
+# Este projeto usa ES Modules (import/export) como padrão
+# Mantenha .js para:
+# - next.config.js (padrão do Next.js)
+# - Arquivos de componentes e lógica
+
+# ⚠️ Aviso de Compatibilidade:
+# Se algum erro ocorrer em sistemas mais antigos, pode ser devido ao uso de ES Modules
+# Sintomas comuns:
+# - Erro de SyntaxError: Cannot use import statement outside a module
+# - Erro de ERR_REQUIRE_ESM
+# - Problemas com require() vs import
+
+# Solução:
+# 1. Mantenha next.config.js como CommonJS (module.exports)
+# 2. Use .mjs para forçar ES Modules
+# 3. Use .cjs para forçar CommonJS
+# 4. Adicione "type": "module" no package.json apenas se necessário
+
+# Arquivos que devem permanecer em CommonJS (.js):
+# - next.config.js
+# - jest.config.js (se usado)
+# - outros arquivos de configuração que exigem CommonJS
