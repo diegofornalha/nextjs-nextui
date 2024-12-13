@@ -2,11 +2,22 @@
 
 import { Button } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { FC, useState } from 'react'
 
 type PlanType = 'personal' | 'business'
 
-export default function PlanoPage() {
+interface Plan {
+  name: string
+  price: string
+  description: string
+  buttonText: string
+  buttonClass: string
+  features: string[]
+  isPopular?: boolean
+  footer?: string
+}
+
+const PlanoPage: FC = () => {
   const router = useRouter()
   const [planType, setPlanType] = useState<PlanType>('personal')
 
@@ -14,7 +25,7 @@ export default function PlanoPage() {
     router.push('/')
   }
 
-  const personalPlans = [
+  const personalPlans: Plan[] = [
     {
       name: 'Grátis',
       price: '0',
@@ -25,7 +36,8 @@ export default function PlanoPage() {
         'Acesso ao GPT-4o mini',
         'Modo voz padrão',
         'Acesso limitado ao GPT-4o'
-      ]
+      ],
+      isPopular: false
     },
     {
       name: 'Plus',
@@ -50,11 +62,12 @@ export default function PlanoPage() {
         'Tudo do Plus',
         'Acesso ilimitado ao o1, o1-mini e GPT-4o',
         'Acesso ilimitado à voz avançada'
-      ]
+      ],
+      isPopular: false
     }
   ]
 
-  const businessPlans = [
+  const businessPlans: Plan[] = [
     {
       name: 'Team',
       price: '25',
@@ -69,7 +82,8 @@ export default function PlanoPage() {
         'Console de administrador para gerenciar seu espaço de trabalho',
         'Os dados do Team são excluídos do treinamento por padrão'
       ],
-      footer: 'Para 2 usuários ou mais, cobrado anualmente'
+      footer: 'Para 2 usuários ou mais, cobrado anualmente',
+      isPopular: false
     }
   ]
 
@@ -77,7 +91,6 @@ export default function PlanoPage() {
 
   return (
     <div className="min-h-screen p-8 relative">
-      {/* Botão X para fechar */}
       <Button
         isIconOnly
         variant="light"
@@ -90,14 +103,13 @@ export default function PlanoPage() {
         </svg>
       </Button>
 
-      {/* Conteúdo da página */}
       <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-8">Faça upgrade do seu plano</h1>
 
-        {/* Seletor Personal/Business */}
         <div className="flex justify-center mb-12">
           <div className="bg-gray-100 rounded-full p-1 inline-flex">
             <button 
+              type="button"
               className={`px-6 py-2 rounded-full font-medium transition-colors ${
                 planType === 'personal' ? 'bg-white shadow-sm' : 'text-gray-500 hover:text-gray-700'
               }`}
@@ -106,6 +118,7 @@ export default function PlanoPage() {
               Personal
             </button>
             <button 
+              type="button"
               className={`px-6 py-2 rounded-full font-medium transition-colors ${
                 planType === 'business' ? 'bg-white shadow-sm' : 'text-gray-500 hover:text-gray-700'
               }`}
@@ -116,13 +129,12 @@ export default function PlanoPage() {
           </div>
         </div>
 
-        {/* Grid de planos */}
         <div className={`grid gap-6 ${
           planType === 'personal' 
             ? 'grid-cols-1 md:grid-cols-3' 
             : 'grid-cols-1 max-w-xl mx-auto'
         }`}>
-          {plans.map((plan, index) => (
+          {plans.map((plan) => (
             <div 
               key={plan.name}
               className={`p-8 rounded-xl border ${
@@ -141,7 +153,10 @@ export default function PlanoPage() {
                 <span className="text-gray-500 ml-2">USD/mês</span>
               </div>
               <p className="text-gray-600 mb-6">{plan.description}</p>
-              <button className={`w-full py-3 rounded-lg font-medium mb-6 ${plan.buttonClass}`}>
+              <button 
+                type="button"
+                className={`w-full py-3 rounded-lg font-medium mb-6 ${plan.buttonClass}`}
+              >
                 {plan.buttonText}
               </button>
               <ul className="space-y-4">
@@ -170,4 +185,6 @@ export default function PlanoPage() {
       </div>
     </div>
   )
-} 
+}
+
+export default PlanoPage 
