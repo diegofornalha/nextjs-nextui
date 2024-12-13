@@ -273,7 +273,7 @@ projeto/
 ├── node_modules/          # ⚠️ no .gitignore
 ├── src/
 │   ├── @types/
-│   │   └── next-pwa.d.ts
+│   ���   └── next-pwa.d.ts
 │   ├── app/
 │   │   ├── globals.css
 │   │   ├── layout.tsx
@@ -311,3 +311,75 @@ projeto/
   - `tailwind.config.ts`: Configuração do Tailwind CSS
   - `tsconfig.json`: Configuração do TypeScript
   - `.gitignore`: Arquivos a serem ignorados pelo Git
+
+# Ambiente de Desenvolvimento
+- Sistema Operacional: macOS
+- Gerenciador de Pacotes do Sistema: Homebrew (brew)
+- Gerenciador de Pacotes Node: Yarn (exclusivamente)
+
+## Gerenciamento de Dependências
+
+### ✅ Usar Apenas Yarn
+```bash
+yarn add [pacote]         # Instalar nova dependência
+yarn add -D [pacote]      # Instalar dependência de desenvolvimento
+yarn remove [pacote]      # Remover dependência
+yarn                      # Instalar todas as dependências
+yarn upgrade             # Atualizar dependências
+```
+
+### ❌ Não Usar
+- Evitar comandos npm (npm install, npm run, etc)
+- Não manter package-lock.json
+- Não misturar npm e yarn no mesmo projeto
+
+## Scripts do Projeto
+```bash
+yarn dev                  # Ambiente de desenvolvimento
+yarn build               # Build de produção
+yarn start               # Iniciar em produção
+yarn lint                # Executar linter
+```
+
+## Arquivos de Lock
+- Manter apenas: yarn.lock
+- Remover: package-lock.json
+
+## Configuração do .gitignore para Yarn
+```plaintext
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+```
+
+## Instalação no macOS
+- Instalado via Homebrew: `brew install yarn`
+- Atualização: `brew upgrade yarn`
+- Verificar versão: `yarn --version`
+
+## Boas Práticas para macOS
+
+1. **Sempre prefira Homebrew para instalações globais**
+   - Mais confiável
+   - Melhor gerenciamento de dependências
+   - Atualizações mais simples
+   - Menos problemas de permissão
+
+2. **Comandos Homebrew Úteis**
+   ```bash
+   brew install [pacote]    # Instalar pacote
+   brew upgrade [pacote]    # Atualizar pacote
+   brew uninstall [pacote]  # Remover pacote
+   brew doctor             # Verificar problemas
+   brew update             # Atualizar Homebrew
+   ```
+
+3. **Manutenção**
+   - Mantenha o Homebrew atualizado
+   - Limpe pacotes antigos periodicamente: `brew cleanup`
+   - Verifique dependências: `brew deps --tree [pacote]`
