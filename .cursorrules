@@ -338,7 +338,35 @@ yarn remove [pacote]      # Remover dependência
 yarn                      # Instalar todas as dependências
 yarn upgrade             # Atualizar dependências
 yarn cache clean        # Limpa o cache do Yarn quando houver problemas de dependências
+yarn dedupe            # Remove duplicações de pacotes e otimiza dependências
 ```
+
+### Sobre yarn dedupe
+
+O comando `yarn dedupe` é utilizado para:
+
+- Remover versões duplicadas de pacotes
+- Otimizar a árvore de dependências
+- Reduzir o tamanho do node_modules
+- Resolver conflitos de versões similares
+- Melhorar a performance da aplicação
+
+✅ **Quando Usar**:
+
+- Após adicionar novas dependências
+- Quando o node_modules estiver muito grande
+- Se houver warnings de versões duplicadas
+- Durante otimização de performance
+- Antes de fazer deploy em produção
+
+⚠️ **Cuidados**:
+
+- Teste a aplicação após usar dedupe
+- Verifique se não houve breaking changes
+- Mantenha um backup do yarn.lock
+- Execute em ambiente de desenvolvimento primeiro
+
+💡 **Dica**: Use `yarn dedupe --check` para verificar duplicações sem fazer alterações
 
 ### ❌ Não Usar
 
