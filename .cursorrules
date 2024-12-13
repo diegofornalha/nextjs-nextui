@@ -901,4 +901,102 @@ Para VSCode:
    - Documente o tempo necessário para resolução
    - Verifique se todos os tipos estão corretos
    - Faça um commit das alterações que funcionaram
-   - Atualize a documentação se necessário
+   - Atualize a documenta��ão se necessário
+
+## Erros Comuns de Tipos no TypeScript
+
+### Problemas Frequentes com @types
+
+1. **Módulos Não Encontrados**:
+
+   ```typescript
+   // Erro comum
+   Não é possível localizar o módulo '[nome-do-pacote]' ou suas declarações de tipo correspondentes.ts(2307)
+   ```
+
+   **Soluções**:
+
+   - Aguarde a resolução automática do TypeScript Server
+   - Verifique se o pacote @types correspondente está instalado
+   - Crie declarações de tipos locais em `src/@types/[nome-do-pacote].d.ts`
+
+2. **Conflitos de Versões**:
+
+   - Tipos incompatíveis entre dependências
+   - Versões diferentes do mesmo pacote @types
+   - Tipos desatualizados em relação à implementação
+
+3. **Boas Práticas para Tipos**:
+   - Mantenha os pacotes @types alinhados com as versões das dependências
+   - Prefira tipos oficiais dos pacotes quando disponíveis
+   - Use declarações locais apenas quando necessário
+   - Documente decisões sobre tipos personalizados
+
+### Estratégias de Resolução
+
+1. **Abordagem Gradual**:
+
+   ```bash
+   # 1. Verifique se há tipos oficiais
+   yarn add -D @types/[pacote]
+
+   # 2. Se não houver, crie tipos locais
+   src/@types/[pacote].d.ts
+   ```
+
+2. **Declarações Locais**:
+
+   ```typescript
+   // src/@types/[pacote].d.ts
+   declare module "[pacote]" {
+     // Tipos necessários
+     export interface Config {
+       // ...
+     }
+   }
+   ```
+
+3. **Configuração do TypeScript**:
+   ```json
+   {
+     "compilerOptions": {
+       "typeRoots": ["./node_modules/@types", "./src/@types"]
+     }
+   }
+   ```
+
+### Prevenção de Problemas
+
+1. **Manutenção Regular**:
+
+   - Atualize os pacotes @types regularmente
+   - Monitore conflitos de tipos
+   - Mantenha documentação de tipos personalizada
+
+2. **Organização**:
+
+   - Mantenha tipos locais em `src/@types/`
+   - Use namespaces para evitar conflitos
+   - Documente decisões sobre tipos
+
+3. **Quando Criar Tipos Locais**:
+   - Pacote não tem tipos oficiais
+   - Tipos oficiais estão desatualizados
+   - Necessidade de extensão de tipos existentes
+   - Resolução temporária de conflitos
+
+### Sinais de Alerta
+
+✅ **Normal**:
+
+- Erros temporários após instalação de pacotes
+- Avisos de tipos durante atualizações
+- Conflitos resolvidos automaticamente
+- Erros que desaparecem após reiniciar o servidor
+
+❌ **Requer Atenção**:
+
+- Erros persistentes após reiniciar
+- Conflitos entre versões de tipos
+- Tipos incompatíveis entre dependências
+- Erros em código fonte próprio
