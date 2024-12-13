@@ -849,3 +849,56 @@ Para VSCode:
   }
 }
 ```
+
+## Resolução de Problemas de Tipos TypeScript
+
+### Abordagem para Erros de Tipos Persistentes
+
+1. **Quando Aguardar a Resolução Automática**:
+
+   - Se o erro é relacionado a tipos de módulos externos
+   - Se você acabou de instalar ou atualizar dependências
+   - Se o erro aparece após mudanças no `tsconfig.json`
+   - Se o erro persiste mesmo após reiniciar o editor
+
+2. **Tempo de Espera Recomendado**:
+
+   - Aguarde o TypeScript Server reiniciar (geralmente 30 segundos)
+   - Deixe o servidor de desenvolvimento rodando (`yarn dev`)
+   - Permita que o compositor de tipos do TypeScript trabalhe
+   - Evite fazer alterações durante este período
+
+3. **Sinais de Resolução Automática**:
+   - Os erros começam a desaparecer sem intervenção
+   - O editor mostra menos erros gradualmente
+   - As sugestões de autocompletar começam a funcionar
+   - O servidor TypeScript mostra "No errors" no log
+
+### ✅ Quando Aguardar:
+
+- Erros de "Cannot find module" após instalação
+- Erros de tipos em módulos externos
+- Conflitos de tipos após atualização
+- Erros que aparecem e desaparecem
+
+### ❌ Quando Intervir:
+
+- Erros em código fonte próprio
+- Problemas de sintaxe
+- Erros de configuração
+- Dependências realmente faltantes
+
+### Boas Práticas
+
+1. **Durante a Espera**:
+
+   - Mantenha o servidor de desenvolvimento rodando
+   - Não force reload do TypeScript Server
+   - Evite limpar caches desnecessariamente
+   - Continue trabalhando em outras partes do código
+
+2. **Após a Resolução**:
+   - Documente o tempo necessário para resolução
+   - Verifique se todos os tipos estão corretos
+   - Faça um commit das alterações que funcionaram
+   - Atualize a documentação se necessário
