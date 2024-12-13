@@ -329,17 +329,26 @@ projeto/
 
 ## Gerenciamento de Dependências
 
-### ✅ Usar Apenas Yarn
+### ✅ Usar Apenas Yarn 4 (Berry)
 
 ```bash
-yarn add [pacote]         # Instalar nova dependência
-yarn add -D [pacote]      # Instalar dependência de desenvolvimento
-yarn remove [pacote]      # Remover dependência
-yarn                      # Instalar todas as dependências
-yarn upgrade             # Atualizar dependências
-yarn cache clean        # Limpa o cache do Yarn quando houver problemas de dependências
-yarn dedupe            # Remove duplicações de pacotes e otimiza dependências
+yarn deps:outdated      # Verificar e atualizar dependências interativamente
+yarn up -i             # Alternativa direta para verificar atualizações
+yarn up [pacote]       # Atualizar um pacote específico
+yarn add [pacote]      # Instalar nova dependência
+yarn add -D [pacote]   # Instalar dependência de desenvolvimento
+yarn remove [pacote]   # Remover dependência
+yarn                   # Instalar todas as dependências
+yarn dedupe           # Remove duplicações de pacotes e otimiza dependências
 ```
+
+### Comandos Específicos do Yarn 4
+
+- `yarn up -i`: Interface interativa para atualização de dependências
+- `yarn up "*" --latest`: Atualizar todas as dependências para última versão
+- `yarn dlx`: Executar pacotes sem instalá-los (substitui npx)
+- `yarn why [pacote]`: Verificar por que um pacote está instalado
+- `yarn info [pacote]`: Ver informações detalhadas de um pacote
 
 ### Sobre yarn dedupe
 
