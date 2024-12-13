@@ -901,7 +901,7 @@ Para VSCode:
    - Documente o tempo necessário para resolução
    - Verifique se todos os tipos estão corretos
    - Faça um commit das alterações que funcionaram
-   - Atualize a documenta��ão se necessário
+   - Atualize a documentação se necessário
 
 ## Erros Comuns de Tipos no TypeScript
 
@@ -1000,3 +1000,245 @@ Para VSCode:
 - Conflitos entre versões de tipos
 - Tipos incompatíveis entre dependências
 - Erros em código fonte próprio
+
+## Erros Persistentes em Arquivos Específicos
+
+### Erros Comuns em page.tsx
+
+1. **Erros de JSX e Tipos Implícitos**:
+
+   ```typescript
+   // Erro comum
+   O elemento JSX implicitamente tem o tipo 'any' porque não há uma interface de 'JSX.IntrinsicElements'.
+   ```
+
+   **Soluções**:
+
+   - Aguarde o TypeScript Server carregar completamente
+   - Reinicie o servidor de desenvolvimento
+   - Se persistir, adicione tipos explícitos para elementos JSX
+
+2. **Módulos Não Encontrados em Páginas**:
+
+   ```typescript
+   // Erro comum
+   Não é possível localizar o módulo 'react' ou suas declarações de tipo correspondentes.
+   ```
+
+   **Soluções**:
+
+   - Verifique se o arquivo tem a diretiva 'use client'
+   - Aguarde a resolução automática
+   - Se persistir após 1-2 minutos, tente:
+     1. Limpar cache: `rm -rf .next`
+     2. Reinstalar deps: `yarn install`
+     3. Reiniciar servidor: `yarn dev`
+
+3. **Parâmetros com Tipo 'any' Implícito**:
+   ```typescript
+   // Erro comum
+   O parâmetro 'prev' implicitamente tem um tipo 'any'.
+   ```
+   **Soluções**:
+   - Aguarde a inferência de tipos
+   - Se persistir, adicione tipos explícitos:
+     ```typescript
+     const toggleSidebar = useCallback(() => {
+       setIsSidebarOpen((prev: boolean) => !prev);
+     }, []);
+     ```
+
+### Ordem de Resolução
+
+1. **Primeira Tentativa**:
+
+   - Aguarde 30-60 segundos após iniciar o servidor
+   - Não faça alterações durante este período
+   - Observe se os erros começam a desaparecer
+
+2. **Segunda Tentativa** (se os erros persistirem):
+
+   ```bash
+   # 1. Pare o servidor
+   # 2. Limpe os caches
+   rm -rf .next
+   rm -rf node_modules/.cache
+   # 3. Reinstale as dependências
+   yarn install
+   # 4. Inicie o servidor
+   yarn dev
+   ```
+
+3. **Terceira Tentativa** (se ainda persistir):
+   - Feche completamente o editor
+   - Limpe os caches do TypeScript
+   - Reabra o projeto
+   - Inicie o servidor
+
+### Sinais de Resolução Normal vs. Problemas Reais
+
+✅ **Normal**:
+
+- Erros desaparecem gradualmente
+- Erros somem após reiniciar o servidor
+- IDE mostra menos erros com o tempo
+- Erros de tipos são resolvidos automaticamente
+
+❌ **Problema Real**:
+
+- Erros persistem após múltiplas tentativas
+- Erros aumentam com o tempo
+- IDE trava ou fica lento
+- Build falha com os mesmos erros
+
+### Boas Práticas para Prevenção
+
+1. **Durante o Desenvolvimento**:
+
+   - Mantenha o servidor rodando
+   - Evite editar arquivos durante a inicialização
+   - Aguarde a resolução automática
+   - Use tipos explícitos em casos críticos
+
+2. **Configuração do Projeto**:
+
+   - Mantenha dependências atualizadas
+   - Use versões estáveis dos pacotes
+   - Evite misturar diferentes versões do mesmo pacote
+   - Mantenha o tsconfig.json consistente
+
+3. **Quando Criar Tipos Locais**:
+   - Apenas após tentar a resolução automática
+   - Quando os erros são consistentes
+   - Para componentes específicos do projeto
+   - Para sobrescrever tipos problemáticos
+
+## Erros de Lint em page.tsx
+
+### Erros Comuns e Soluções
+
+1. **Erros de Importação**:
+
+   ```typescript
+   // Erro comum
+   'React' must be in scope when using JSX
+   ```
+
+   **Soluções**:
+
+   - Adicione a diretiva 'use client' no topo do arquivo
+   - Aguarde o ESLint reconhecer as configurações do Next.js
+   - Se persistir, verifique se `eslint-config-next` está instalado
+
+2. **Erros de Tipos em Componentes**:
+
+   ```typescript
+   // Erro comum
+   Type '{ children: string; }' is not assignable to type 'IntrinsicAttributes'
+   ```
+
+   **Soluções**:
+
+   - Aguarde o TypeScript Server carregar os tipos
+   - Se persistir, verifique se os tipos do NextUI estão corretos
+   - Adicione tipos explícitos quando necessário
+
+3. **Erros de Hook**:
+   ```typescript
+   // Erro comum
+   React Hook useCallback has missing dependencies
+   ```
+   **Soluções**:
+   - Aguarde o ESLint carregar as regras do React
+   - Se persistir, adicione as dependências faltantes
+   - Use o comando `yarn lint --fix` para correções automáticas
+
+### Ordem de Verificação
+
+1. **Primeira Etapa**:
+
+   ```bash
+   # Verifique os erros de lint
+   yarn lint
+   ```
+
+2. **Segunda Etapa** (se houver erros):
+
+   ```bash
+   # Tente correção automática
+   yarn lint --fix
+   ```
+
+3. **Terceira Etapa** (se persistir):
+   - Verifique as regras do ESLint
+   - Atualize as dependências do ESLint
+   - Limpe o cache do ESLint
+
+### Boas Práticas
+
+1. **Durante o Desenvolvimento**:
+
+   - Mantenha o ESLint atualizado
+   - Use o autofix quando possível
+   - Documente exceções às regras
+   - Mantenha consistência nas soluções
+
+2. **Configuração**:
+
+   - Use as regras recomendadas do Next.js
+   - Evite desabilitar regras globalmente
+   - Documente regras personalizadas
+   - Mantenha o .eslintrc consistente
+
+3. **Quando Ignorar**:
+   - Apenas em casos excepcionais
+   - Com comentários explicativos
+   - Temporariamente durante desenvolvimento
+   - Para regras específicas do arquivo
+
+### Prevenção
+
+1. **Setup Inicial**:
+
+   ```json
+   // package.json
+   {
+     "scripts": {
+       "lint": "next lint",
+       "lint:fix": "next lint --fix"
+     }
+   }
+   ```
+
+2. **Configuração do Editor**:
+
+   ```json
+   // .vscode/settings.json
+   {
+     "editor.codeActionsOnSave": {
+       "source.fixAll.eslint": true
+     }
+   }
+   ```
+
+3. **Hooks do Git**:
+   ```bash
+   # .husky/pre-commit
+   yarn lint
+   ```
+
+### Sinais de Alerta
+
+✅ **Normal**:
+
+- Erros resolvidos com --fix
+- Warnings de dependências
+- Erros temporários após mudanças
+- Problemas resolvidos após reload
+
+❌ **Requer Atenção**:
+
+- Erros persistentes após --fix
+- Conflitos entre regras
+- Erros em múltiplos arquivos
+- Problemas de configuração
