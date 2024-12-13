@@ -21,7 +21,8 @@
     "deps:check": "yarn dlx @yarnpkg/doctor",
     "deps:update": "yarn upgrade-interactive",
     "deps:clean": "yarn dedupe",
-    "deps:why": "yarn why"
+    "deps:why": "yarn why",
+    "analyze": "ANALYZE=true yarn build"
   },
   "dependencies": {
     "@nextui-org/react": "2.2.9",
@@ -33,6 +34,7 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "15.1.0",
     "@types/node": "20.10.6",
     "@types/react": "18.2.46",
     "@types/react-dom": "18.2.18",
