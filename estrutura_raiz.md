@@ -7,7 +7,26 @@
 ├── .next/                  # Build do Next.js (ignorado no git)
 ├── node_modules/          # Dependências (ignorado no git)
 ├── public/                # Assets estáticos
+│   └── manifest.json     # Configuração PWA
 └── src/                   # Código fonte da aplicação
+    ├── app/              # App Router do Next.js 13+
+    │   ├── globals.css   # Estilos globais
+    │   ├── layout.tsx    # Layout principal
+    │   ├── page.tsx      # Página inicial
+    │   ├── plano/        # Rota /plano
+    │   │   └── page.tsx  # Página do plano
+    │   ├── icons.tsx     # Ícones da aplicação
+    │   └── providers.tsx # Providers da aplicação
+    ├── components/       # Componentes reutilizáveis
+    │   └── ui/          # Componentes de UI
+    │       └── Button.tsx # Componente botão
+    ├── hooks/           # Hooks customizados
+    │   └── useLocalStorage.ts # Hook para localStorage
+    ├── lib/             # Bibliotecas e utilitários
+    │   └── constants/   # Constantes da aplicação
+    │       └── config.ts # Configurações
+    └── types/           # Definições de tipos
+        └── index.ts     # Tipos globais
 ```
 
 ## Arquivos de Configuração
