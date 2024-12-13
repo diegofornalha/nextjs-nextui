@@ -37,3 +37,11 @@ next-env.d.ts
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Evitar duplicação de configurações
+postcss.config.js
+
+# Arquivos temporários
+*.tmp
+*.temp
+.DS_Store
